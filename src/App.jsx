@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Header from "./components/Header";
-
+import { GenerarId } from "./helpers";
 import LogoNuevoGasto from "./assets/img/nuevo-gasto.svg";
 import Modal from "./components/Modal";
 
@@ -9,12 +9,22 @@ function App() {
   const [isValidPres, setIsValidPres] = useState();
   const [modal, setModal] = useState(false);
   const [animarModal, setAnimarModal] = useState(false);
+  const [gastos, setGastos] = useState([]);
   const handleNuevoGasto = () => {
     setModal(true);
 
     setTimeout(() => {
       setAnimarModal(true);
     }, 200);
+  };
+
+  const guardarGastos = (gasto) => {
+    gasto.id = GenerarId();
+    setGastos([...gastos, gasto]);
+    setAnimarModal(false);
+    setTimeout(() => {
+      setModal(false);
+    }, 300);
   };
 
   return (
@@ -40,6 +50,7 @@ function App() {
           setModal={setModal}
           animarModal={animarModal}
           setAnimarModal={setAnimarModal}
+          guardarGastos={guardarGastos}
         />
       )}
     </React.Fragment>
